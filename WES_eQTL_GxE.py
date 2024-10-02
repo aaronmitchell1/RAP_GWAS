@@ -1,11 +1,13 @@
-#Experimental GWAS conducted using REGENIE on full UKB sample to assess risk factor (i.e., BMI) with case status as environmental variable.
-#Since conducting GWAS of risk factors measured in cohorts with the disease are small (there are <3k individuals with i.e., BMI measured after colorectal cancer diagnosis),
-#testing this approach instead.
+##Experimental GWAS conducted using REGENIE on full UKB sample to assess risk factor (i.e., BMI) with case status as environmental variable.
+##Since conducting GWAS of risk factors measured in cohorts with the disease are small (there are <3k individuals with i.e., BMI measured after colorectal cancer diagnosis),
+##testing this approach instead.
 
-#WES or eQTL only GWAS may also reduce multiple testing burden.
+##WES or eQTL only GWAS may also reduce multiple testing burden.
 
 #Take cohort data from UKB SQL cohort browser. Build a complete cases cohort ('not null') for the variable of interest
 #Interaction variable can be specified in the GWAS covariate file
+
+#Need to liftover SNP array from GRCh37 to GRCh38 using BCFtools
 
 #Process genotype calls with PLINK
 
