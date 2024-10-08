@@ -15,3 +15,12 @@ plink2 --bfile ukb_c1-22_merged
 --autosome --maf 0.01 --mac 100 --geno 0.1 --hwe 1e-15 --mind 0.1 --write-snplist --write-samples --no-id-header --out imputed_array_snps_qc_pass
 
 #Then run bgens_qc.wdl on RAP, specify -folder
+
+#Make SNP and ID list from merged chromosome file
+
+plink2 \ 
+--bfile ukb_c1-22_hs38DH_merged \ 
+--out final_array_snps_CRCh38_qc_pass \ 
+--mac 100 --maf 0.01 --hwe 1e-15 --mind 0.1 --geno 0.1 \ 
+--write-snplist --write-samples --no-id-header \ 
+--threads $(nproc)
