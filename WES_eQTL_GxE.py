@@ -14,6 +14,13 @@
 Bulk/Genotype 
 Results/Genotype Calls/
 
+dx run swiss-army-knife -iin="${data_file_dir}/ukb_c1-22_merged.bed" \
+   -iin="${data_file_dir}/ukb_c1-22_merged.bim" \
+   -iin="${data_file_dir}/ukb_c1-22_merged.fam"\
+   -iin="/Data/colorectal_df.phe" \
+   -icmd="${run_plink_qc}" --tag="Array QC" --instance-type "mem1_ssd1_v2_x36"\
+   --destination="/Data/array_qc/" --brief --yes
+
 #Set output directory on RAP.
 
 data_file_dir="/Data/"
@@ -47,6 +54,8 @@ run regenie step1=
 --covarCol age --covarCol sex --covarCol ethnic group --covarCol ever smoked\
 --bsize 1000 --bt --loocv --gz --threads 16";
 
+--interaction
+                 
 dx run swiss-army-knife -iin="$(data file dir)/ukb22418 c1 22 v1 merged.bed" \
 -iin="$ (data file dir)/ukb22418 c1 22 v1 merged.bim" \
 -iin="${data file _dir)/ukb22418_c1_22_v1_merged. fam"|
@@ -55,8 +64,3 @@ dx run swiss-army-knife -iin="$(data file dir)/ukb22418 c1 22 v1 merged.bed" \
 -icmd=$ (run regenie step1) --tag="Stepl" --instance-type
 "mem1 ssd1 v2 x16"\
 --destination="$ (data file dir)" --brief --yes;
-
-
---interaction
-
-
