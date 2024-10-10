@@ -71,11 +71,13 @@ def fields_for_id(field_id):
             ].name.values
         )
 
-#Select the first ten PCs, otherwise for all other variables select instance 1
-        if _id == '22009':
-            field_names += select_field_names[:10]
-        else:
-            field_names += select_field_names
+#Select the first ten PCs, otherwise for all other variables check field names then only select instance 1
+
+if _id == '22009':
+    field_names += select_field_names[:10]
+else:
+    if len(select_field_names) > 0:
+        field_names.append(select_field_names[0])
 
 field_names = [f'participant.{f}' for f in field_names]
 return ','.join(field_names)
