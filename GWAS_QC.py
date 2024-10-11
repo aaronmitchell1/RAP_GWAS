@@ -26,7 +26,7 @@ output_dir = '/Data/'
 #Automatically discover dispensed dataset ID
 
 dispensed_dataset = dxpy.find_one_data_object(
-    typename='Dataset', name='app*.dataset', folder='/', name_mode='glob'
+    typename='White_patients_with_BMI', name='app*.White_patients_with_BMI', folder='/Aaron_PhD_inc_genetic_data/', name_mode='glob'
 )
 dispensed_dataset_id = dispensed_dataset['id']
 
