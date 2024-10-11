@@ -34,6 +34,7 @@ dispensed_dataset_id = dispensed_dataset['id']
 
 project_id = dxpy.find_one_project()['id']
 dataset = (':').join([project_id, dispensed_dataset_id])
+participant = dataset['participant']
 
 #Load dictionary files from project ID
 
