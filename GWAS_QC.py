@@ -8,7 +8,16 @@ import subprocess
 import glob
 import os
 
+#Initialise Spark
+
+sc = pyspark.SparkContext()
+spark = pyspark.sql.SparkSession(sc)
+
 #Library for genetic data, using Genomics England reference panel for now (TOPMED also available)
+
+genotype_folder = 'Genotype calls'
+genotype_field_id = '22418'
+output_dir = '/Data/'
 
 imputation_folder = 'Imputation from genotype (GEL)'
 imputation_field_id = '21008'
