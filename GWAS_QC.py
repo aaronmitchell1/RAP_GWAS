@@ -47,7 +47,7 @@ subprocess.check_call(cmd)
 colorectal_id = list(
     dxpy.find_data_objects(
         typename='CohortBrowser',
-        folder='/Aaron_PhD_inc_genetic_data/Cohorts',
+        folder='/Aaron_PhD_inc_genetic_data',
         name_mode='exact',
         name='White_patients_with_BMI',
     )
