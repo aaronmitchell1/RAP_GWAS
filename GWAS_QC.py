@@ -18,6 +18,7 @@ spark = pyspark.sql.SparkSession(sc)
 genotype_folder = 'Genotype calls'
 genotype_field_id = '22418'
 output_dir = '/Data/'
+field_name ="ukb81499"
 
 imputation_folder = 'Imputation from genotype (GEL)'
 imputation_field_id = '21008'
