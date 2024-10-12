@@ -21,7 +21,6 @@ output_dir = '/Data/'
 
 imputation_folder = 'Imputation from genotype (GEL)'
 imputation_field_id = '21008'
-output_dir = '/Data/'
 
 #Automatically discover dispensed dataset ID
 
@@ -55,6 +54,7 @@ colorectal_id = list(
 colorectal_dataset = (':').join([project_id, colorectal_id])
 
 #Specify relevant field IDs - sex, genetic sex, genetic ethnic grouping, sex chromosome aneuploidy, genetic kinship to other participants, age at baseline, BMI, used in genetic principal components, genetic principal components. Could potentially include smoking status?
+
 field_ids = [
     '31',
     '22001',
@@ -114,6 +114,7 @@ print(colorectal_df.shape)
 colorectal_df.head()
 
 #Rename column headers
+
 colorectal_df = colorectal_df.rename(columns=lambda x: re.sub('participant.', '', x))
 colorectal_df.head()
 
@@ -128,10 +129,12 @@ colorectal_df_qced = colorectal_df[
     )  
 ].copy()
 
-#Impute any missing BMI values with mean
+#Impute any missing BMI values with mean (shouldn't be any as they were removed at cohort browser stage but keep for later)
+
 colorectal_df_qced['p23104_i0'].fillna(colorectal_df_qced['p23104_i0'].mean(), inplace=True)
 
 #Tidy up dfs in REGENIE format, number each PC
+
 colorectal_df_qced = colorectal_df_qced.rename(columns=lambda x: re.sub('p22009_a','pc',x))
 colorectal_df_qced = colorectal_df_qced.rename(
     columns={
@@ -143,9 +146,11 @@ colorectal_df_qced = colorectal_df_qced.rename(
 )
 
 #Add FID column in required input format for REGENIE
+
 colorectal_df_qced['FID'] = colorectal_df_qced['IID']
 
 #Create a phenotype table from the QC'd data
+
 cols = [
         'FID',
         'IID',
@@ -156,8 +161,10 @@ cols = [
 cols.extend([col for col in colorectal_df_qced if 'pc' in col])
 colorectal_df_phenotype = colorectal_df_qced[cols]
 
-#Select participants who are imputed to the Genomics England reference panel, N.B. sort paths
-path_to_impute_file = f'/mnt/project/Bulk/Imputation/{imputation_folder}/ukb{imputation_field_id}_c1_b0_v1.sample'
+#Select participants who are imputed to the Genomics England reference panel - genotype calls in format ukb22418_c1_b0_v2.bed +
+#imputation in format ukb21008_c1_b0_v1.sample
+
+path_to_impute_file = f'/mnt/project/Bulk/Imputation/Imputation from genotype (GEL)/ukb21008_c1_b0_v1.sample'
 sample_file = pd.read_csv(
     path_to_impute_file,
     delimiter='\s',
@@ -167,10 +174,13 @@ sample_file = pd.read_csv(
 )
 
 #Generate the phenotype file and the imputed .sample file for those included in the Genomics England imputed data
+
 phenotype_df = colorectal_df_phenotype.join(
     sample_file.set_index('IID'), on='IID', rsuffix='_sample', how='inner'
 )
+
 #Remove redundant columns from .fam file
+
 phenotype_df.drop(
     columns=['FID_sample', 'missing', 'sex_sample'],
     axis=1,
@@ -179,6 +189,7 @@ phenotype_df.drop(
 )
 
 #Write phenotype file to TSV
+
 phenotype_df.to_csv('phenotype_df.phe', sep='\t', na_rep='NA', index=False, quoting=3)
 
 #Save to RAP
