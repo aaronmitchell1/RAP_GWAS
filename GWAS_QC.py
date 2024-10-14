@@ -162,6 +162,16 @@ cols = [
 cols.extend([col for col in colorectal_df_qced if 'pc' in col])
 colorectal_df_phenotype = colorectal_df_qced[cols]
 
+#Z-transform BMI so it is per SD change
+
+mean_bmi = np.mean(colorectal_df_phenotype['bmi'])
+std_bmi = np.std(colorectal_df_phenotype['bmi'])
+bmi_transformed = (colorectal_df_phenotype['bmi'] - mean_bmi) / std_bmi
+bmi_df = pd.DataFrame({
+    'bmi_transformed': bmi_transformed
+})
+colorectal_df_phenotype['bmi_transformed'] = bmi_df
+
 #Select participants who are imputed to the Genomics England reference panel - genotype calls in format ukb22418_c1_b0_v2.bed +
 #imputation in format ukb21008_c1_b0_v1.sample
 
