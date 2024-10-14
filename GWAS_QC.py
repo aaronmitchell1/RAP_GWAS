@@ -38,6 +38,10 @@ field_name ="ukb81499"
 imputation_folder = 'Imputation from genotype (GEL)'
 imputation_field_id = '21008'
 
+#Impute any missing BMI values with mean (shouldn't be any as they were removed at cohort browser stage)
+
+colorectal_df_qced['p23104_i0'].fillna(colorectal_df_qced['p23104_i0'].mean(), inplace=True)
+
 #Automatically discover dispensed database name and dataset id
 
 dispensed_dataset = dxpy.find_one_data_object(
@@ -64,11 +68,6 @@ field_ids = [
     '22009',
 ]
 
-#Retrieve fields using function, needs fields function to run and filter_sql needs to = the name you set as cohort earlier, then convert to Pandas df for further analysis.
-
-cohort_df = participant.retrieve_fields(fields = fields, filter_sql = cohort.sql, engine=dxdata.connect())
-cohort_df = cohort_df.toPandas()
-
 #Select the first ten PCs, otherwise for all other variables check field names then only select instance 1
 
 if _id == '22009':
@@ -79,6 +78,13 @@ else:
 
 field_names = [f'participant.{f}' for f in field_names]
 return ','.join(field_names)
+
+
+#Retrieve fields using function, needs fields function to run and filter_sql needs to = the name you set as cohort earlier, then convert to Pandas df for further analysis.
+
+cohort_df = participant.retrieve_fields(fields = fields, filter_sql = cohort.sql, engine=dxdata.connect())
+cohort_df = cohort_df.toPandas()
+
 
 #Run QC 
 
@@ -112,9 +118,7 @@ colorectal_df.head()
 
 
 
-#Impute any missing BMI values with mean (shouldn't be any as they were removed at cohort browser stage but keep for later)
 
-colorectal_df_qced['p23104_i0'].fillna(colorectal_df_qced['p23104_i0'].mean(), inplace=True)
 
 
 
