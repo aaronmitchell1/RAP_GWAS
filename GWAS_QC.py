@@ -51,7 +51,7 @@ field_ids = [
     '22009',
 ]
 
-cohort_df = participant.retrieve_fields(fields = field_ids, engine=dxdata.connect()).to_koalas()
+cohort_df = participant.retrieve_fields(fields = fields, filter_sql = cohort.sql, engine=dxdata.connect()).to_pandas_on_spark
 
 def fields_for_id(field_ids):
     field_names = ['eid']
