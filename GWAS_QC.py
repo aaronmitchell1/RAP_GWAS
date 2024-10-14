@@ -41,7 +41,7 @@ dispensed_dataset_id = dxpy.find_one_data_object(typename="Dataset", name="app*.
 project_id = dxpy.find_one_project()['id']
 dataset = (':').join([project_id, dispensed_dataset_id])
 participant = dataset['participant']
-cohort = dxdata.load_cohort("/Cohorts/White_patients_with_BMI")  
+cohort = dxdata.load_cohort("/White_patients_with_BMI")  
 
 #Load dictionary files from project ID
 
@@ -53,7 +53,7 @@ subprocess.check_call(cmd)
 colorectal_id = list(
     dxpy.find_data_objects(
         typename='CohortBrowser',
-        folder='/Aaron_PhD_inc_genetic_data',
+        folder='/',
         name_mode='exact',
         name='White_patients_with_BMI',
     )
