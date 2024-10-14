@@ -26,39 +26,16 @@ imputation_folder = 'Imputation from genotype (GEL)'
 imputation_field_id = '21008'
 
 #Automatically discover dispensed database name and dataset id
-dispensed_database_name = dxpy.find_one_data_object(classname="database", name="app*", folder="/", name_mode="glob", describe=True)["describe"["name"]
-dispensed_dataset_id = dxpy.find_one_data_object(typename="Dataset", name="app*.dataset", folder="/", name_mode="glob")["id"]
 
-#Automatically discover dispensed dataset ID
-
-#dispensed_dataset = dxpy.find_one_data_object(
-    typename='White_patients_with_BMI', name='app*.White_patients_with_BMI', folder='/Aaron_PhD_inc_genetic_data/', name_mode='glob'
-)
-#dispensed_dataset_id = dispensed_dataset['id']
-
-#Get project ID
-
-project_id = dxpy.find_one_project()['id']
-dataset = (':').join([project_id, dispensed_dataset_id])
+dispensed_dataset = dxpy.find_one_data_object(
+    typename="Dataset", 
+    name="app*.dataset", 
+    folder="/", 
+    name_mode="glob")
+dispensed_dataset_id = dispensed_dataset["id"]
+dataset = dxdata.load_dataset(id=dispensed_dataset_id)
 participant = dataset['participant']
-cohort = dxdata.load_cohort("/White_patients_with_BMI")  
-
-#Load dictionary files from project ID
-
-cmd = ['dx', 'extract_dataset', dataset, '-ddd', '--delimiter', ',']
-subprocess.check_call(cmd)
-
-#Discover cohort data - N.B. change name field if needed
-
-colorectal_id = list(
-    dxpy.find_data_objects(
-        typename='CohortBrowser',
-        folder='/',
-        name_mode='exact',
-        name='White_patients_with_BMI',
-    )
-)[0]['id']
-colorectal_dataset = (':').join([project_id, colorectal_id])
+cohort = dxdata.load_cohort("/White_patients_with_BMI")
 
 #Specify relevant field IDs - sex, genetic sex, genetic ethnic grouping, sex chromosome aneuploidy, genetic kinship to other participants, age at baseline, BMI, used in genetic principal components, genetic principal components. Could potentially include smoking status?
 
@@ -74,19 +51,16 @@ field_ids = [
     '22009',
 ]
 
-path = os.getcwd()
-data_dict_csv = glob.glob(os.path.join(path, '*.data_dictionary.csv'))[0]
-data_dict_df = pd.read_csv(data_dict_csv)
-data_dict_df.head()
+cohort_df = participant.retrieve_fields(fields = field_ids, filter_sql = case.sql, engine=dxdata.connect()).to_koalas()
 
-def fields_for_id(field_id):
-    '''Collect all field names (e.g. 'p<field_id>_iYYY_aZZZ') given a list of field IDs and return string to pass into extract_dataset'''
+def fields_for_id(field_ids):
     field_names = ['eid']
-    for _id in field_id:
+    for _id in field_ids:
         select_field_names = list(
-            data_dict_df[
-                data_dict_df.name.str.match(r'^p{}(_i\d+)?(_a\d+)?$'.format(_id))
+            fields[
+                fields.name.str.match(r'^p{}(_i\d+)?(_a\d+)?$'.format(_id))
             ].name.values
+    return sorted(fields, key=lambda f: LooseVersion(f.name)
         )
 
 #Select the first ten PCs, otherwise for all other variables check field names then only select instance 1
@@ -213,3 +187,46 @@ phenotype_df.to_csv('phenotype_df.phe', sep='\t', na_rep='NA', index=False, quot
 
 %%bash -s "$output_dir"
 dx upload phenotype_df.phe -p --path $1 --brief
+
+###Extra
+
+#Automatically discover dispensed dataset ID
+
+#dispensed_dataset = dxpy.find_one_data_object(
+    typename='White_patients_with_BMI', name='app*.White_patients_with_BMI', folder='/Aaron_PhD_inc_genetic_data/', name_mode='glob'
+)
+#dispensed_dataset_id = dispensed_dataset['id']
+
+#Get project ID
+
+project_id = dxpy.find_one_project()['id']
+dataset = (':').join([project_id, dispensed_dataset_id])
+
+#Load dictionary files from project ID
+
+cmd = ['dx', 'extract_dataset', dataset, '-ddd', '--delimiter', ',']
+subprocess.check_call(cmd)
+
+#Discover cohort data - N.B. change name field if needed
+
+colorectal_id = list(
+    dxpy.find_data_objects(
+        typename='CohortBrowser',
+        folder='/',
+        name_mode='exact',
+        name='White_patients_with_BMI',
+    )
+)[0]['id']
+colorectal_dataset = (':').join([project_id, colorectal_id])
+
+path = os.getcwd()
+data_dict_csv = glob.glob(os.path.join(path, '*.data_dictionary.csv'))[0]
+data_dict_df = pd.read_csv(data_dict_csv)
+data_dict_df.head()
+
+def fields_for_id(field_ids):
+    field_names = ['eid']
+    from distutils.version import LooseVersion
+    field_id = str(field_ids)
+    fields = participant.find_fields(name_regex=r'^p{}(_i\d+)?(_a\d+)?$'.format(field_ids))
+    return sorted(fields, key=lambda f: LooseVersion(f.name))
