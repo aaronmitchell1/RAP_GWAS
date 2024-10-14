@@ -35,7 +35,7 @@ dispensed_dataset = dxpy.find_one_data_object(
 dispensed_dataset_id = dispensed_dataset["id"]
 dataset = dxdata.load_dataset(id=dispensed_dataset_id)
 participant = dataset['participant']
-cohort = dxdata.load_cohort("/White_patients_with_BMI")
+cohort = dxdata.load_cohort("White_patients_with_BMI")
 
 #Specify relevant field IDs - sex, genetic sex, genetic ethnic grouping, sex chromosome aneuploidy, genetic kinship to other participants, age at baseline, BMI, used in genetic principal components, genetic principal components. Could potentially include smoking status?
 
