@@ -25,12 +25,16 @@ field_name ="ukb81499"
 imputation_folder = 'Imputation from genotype (GEL)'
 imputation_field_id = '21008'
 
+#Automatically discover dispensed database name and dataset id
+dispensed_database_name = dxpy.find_one_data_object(classname="database", name="app*", folder="/", name_mode="glob", describe=True)["describe"["name"]
+dispensed_dataset_id = dxpy.find_one_data_object(typename="Dataset", name="app*.dataset", folder="/", name_mode="glob")["id"]
+
 #Automatically discover dispensed dataset ID
 
-dispensed_dataset = dxpy.find_one_data_object(
+#dispensed_dataset = dxpy.find_one_data_object(
     typename='White_patients_with_BMI', name='app*.White_patients_with_BMI', folder='/Aaron_PhD_inc_genetic_data/', name_mode='glob'
 )
-dispensed_dataset_id = dispensed_dataset['id']
+#dispensed_dataset_id = dispensed_dataset['id']
 
 #Get project ID
 
