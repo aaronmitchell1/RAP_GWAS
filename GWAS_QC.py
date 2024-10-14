@@ -51,7 +51,7 @@ field_ids = [
     '22009',
 ]
 
-cohort_df = participant.retrieve_fields(fields = fields, filter_sql = cohort.sql, engine=dxdata.connect()).toPandas
+cohort_df = participant.retrieve_fields(fields = fields, filter_sql = cohort.sql, engine=dxdata.connect())
 
 def fields_for_id(field_ids):
     field_names = ['eid']
