@@ -9,11 +9,24 @@ import glob
 import os
 import pyspark
 import dxdata
+import spark
 
 #Initialise Spark
 
 sc = pyspark.SparkContext()
 spark = pyspark.sql.SparkSession(sc)
+
+#Function to extract field IDs
+
+def fields_for_id(field_ids):
+    field_names = ['eid']
+    for _id in field_ids:
+        select_field_names = list(
+            fields[
+                fields.name.str.match(r'^p{}(_i\d+)?(_a\d+)?$'.format(_id))
+            ].name.values
+    return sorted(fields, key=lambda f: LooseVersion(f.name)
+        )
 
 #Library for genetic data, using Genomics England reference panel for now (TOPMED also available)
 
@@ -51,19 +64,10 @@ field_ids = [
     '22009',
 ]
 
+#Retrieve fields using function, needs fields function to run and filter_sql needs to = the name you set as cohort earlier, then convert to Pandas df for further analysis.
+
 cohort_df = participant.retrieve_fields(fields = fields, filter_sql = cohort.sql, engine=dxdata.connect())
-
-df = cohort_df.toPandas()
-
-def fields_for_id(field_ids):
-    field_names = ['eid']
-    for _id in field_ids:
-        select_field_names = list(
-            fields[
-                fields.name.str.match(r'^p{}(_i\d+)?(_a\d+)?$'.format(_id))
-            ].name.values
-    return sorted(fields, key=lambda f: LooseVersion(f.name)
-        )
+cohort_df = cohort_df.toPandas()
 
 #Select the first ten PCs, otherwise for all other variables check field names then only select instance 1
 
@@ -76,30 +80,7 @@ else:
 field_names = [f'participant.{f}' for f in field_names]
 return ','.join(field_names)
 
-#Select phenotypes
-
-cmd = [
-    'dx',
-    'extract_dataset',
-    colorectal_dataset,
-    '--fields',
-    field_names,
-    '--delimiter',
-    ',',
-    '--output',
-    'colorectal_dictionary.csv',
-]
-subprocess.check_call(cmd)
-
-colorectal_dict_csv = 'colorectal_dictionary.csv'
-colorectal_df = pd.read_csv(colorectal_dict_csv)
-print(colorectal_df.shape)
-colorectal_df.head()
-
-#Rename column headers
-
-colorectal_df = colorectal_df.rename(columns=lambda x: re.sub('participant.', '', x))
-colorectal_df.head()
+#Run QC 
 
 colorectal_df_qced = colorectal_df[
     (colorectal_df['p31'] == df['p22001']) # Keep only individuals whose self-reported genetic sex are the same
@@ -112,10 +93,6 @@ colorectal_df_qced = colorectal_df[
     )  
 ].copy()
 
-#Impute any missing BMI values with mean (shouldn't be any as they were removed at cohort browser stage but keep for later)
-
-colorectal_df_qced['p23104_i0'].fillna(colorectal_df_qced['p23104_i0'].mean(), inplace=True)
-
 #Tidy up dfs in REGENIE format, number each PC
 
 colorectal_df_qced = colorectal_df_qced.rename(columns=lambda x: re.sub('p22009_a','pc',x))
@@ -127,6 +104,19 @@ colorectal_df_qced = colorectal_df_qced.rename(
         'p23104_i0': 'bmi',
     }
 )
+
+#Rename column headers
+
+colorectal_df = colorectal_df.rename(columns=lambda x: re.sub('participant.', '', x))
+colorectal_df.head()
+
+
+
+#Impute any missing BMI values with mean (shouldn't be any as they were removed at cohort browser stage but keep for later)
+
+colorectal_df_qced['p23104_i0'].fillna(colorectal_df_qced['p23104_i0'].mean(), inplace=True)
+
+
 
 #Add FID column in required input format for REGENIE
 
@@ -230,5 +220,25 @@ def fields_for_id(field_ids):
     field_names = ['eid']
     from distutils.version import LooseVersion
     field_id = str(field_ids)
+
+#Select phenotypes
+
+cmd = [
+    'dx',
+    'extract_dataset',
+    colorectal_dataset,
+    '--fields',
+    field_names,
+    '--delimiter',
+    ',',
+    '--output',
+    'colorectal_dictionary.csv',
+]
+subprocess.check_call(cmd)
+
+colorectal_dict_csv = 'colorectal_dictionary.csv'
+colorectal_df = pd.read_csv(colorectal_dict_csv)
+print(colorectal_df.shape)
+colorectal_df.head()
     fields = participant.find_fields(name_regex=r'^p{}(_i\d+)?(_a\d+)?$'.format(field_ids))
     return sorted(fields, key=lambda f: LooseVersion(f.name))
