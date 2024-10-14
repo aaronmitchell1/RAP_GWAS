@@ -53,6 +53,8 @@ field_ids = [
 
 cohort_df = participant.retrieve_fields(fields = fields, filter_sql = cohort.sql, engine=dxdata.connect())
 
+df = cohort_df.toPandas()
+
 def fields_for_id(field_ids):
     field_names = ['eid']
     for _id in field_ids:
