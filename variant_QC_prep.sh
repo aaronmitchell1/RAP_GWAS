@@ -21,3 +21,20 @@ dx run swiss-army-knife -iin="/ukb22418_c1_22_v2_merged.bed" \
    -iin="/colorectal.phe" \
    -icmd="${run_plink_qc}" --tag="Step1" --instance-type "mem1_ssd1_v2_x16"\
    --destination="/" --brief --yes
+
+#Step 1 REGENIE
+
+run_regenie_step1="regenie --step 1\
+ --lowmem --out colorectal_results --bed ukb22418_c1_22_v2_merged\
+ --phenoFile colorectal.phe --covarFile colorectal.phe\
+ --extract snps_qc_pass.snplist --phenoCol bmi\
+ --covarCol age --covarCol sex --covarCol pc1 --covarCol pc2 --covarCol pc3 --covarCol pc4 --covarCol pc5 --covarCol pc6 --covarCol pc7 --covarCol pc8 --covarCol pc9 --covarCol pc10\
+ --bsize 1000 --loocv --gz --threads 16"
+
+dx run swiss-army-knife -iin="/ukb22418_c1_22_v2_merged.bed" \
+   -iin="/ukb22418_c1_22_v2_merged.bim" \
+   -iin="/ukb22418_c1_22_v2_merged.fam"\
+   -iin="/colorectal.phe" \
+   -iin="/snps_qc_pass.snplist" \
+   -icmd="${run_regenie_step1}" --tag="Step1" --instance-type "mem1_ssd1_v2_x16"\
+   --destination="/" --brief --yes
