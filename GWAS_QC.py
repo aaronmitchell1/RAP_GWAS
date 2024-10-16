@@ -10,6 +10,7 @@ import os
 import pyspark
 import dxdata
 import spark
+import dxpy
 
 #Initialise Spark
 
@@ -18,15 +19,19 @@ spark = pyspark.sql.SparkSession(sc)
 
 #Function to extract field IDs
 
-def fields_for_id(field_ids):
-    field_names = ['eid']
-    for _id in field_ids:
-        select_field_names = list(
-            fields[
-                fields.name.str.match(r'^p{}(_i\d+)?(_a\d+)?$'.format(_id))
-            ].name.values
-    return sorted(fields, key=lambda f: LooseVersion(f.name)
-        )
+def fields_for_id(field_id):
+    from distutils.version import LooseVersion
+    field_id = str(field_id)
+    fields = participant. find_fields (name_regex=r'^pf}(_i\d+)?(_a\d+)?$'.format(field_id))
+    return sorted(fields, key=lambda f: LooseVersion(f.name))
+
+fields = [fields_for_id(f)[0] for f in field_ids] + [participant.find_field(name='p20160_i0')] + [participant.find_field(name='eid')]
+field_description = pd.DataFrame({
+    'Field': [f.name for f in fields],
+    'Title': [f.title for f in fields],
+    'Coding': [f.coding.codes if f.coding is not None else '' for f in fields ]
+ })
+field_description
 
 #Library for genetic data, using Genomics England reference panel for now (TOPMED also available)
 
