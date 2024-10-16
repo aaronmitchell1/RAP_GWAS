@@ -1,1 +1,1 @@
-dx extract_dataset White_patients_with_BMI --entities "participant" --fields "participant.eid,participant.p31,participant.p22001,participant.p22006,participant.p22019,participant.p22021,participant.p21022,participant.p23104_i0,participant.p22020,participant.p22009_a1,participant.p22009_a2,participant.p22009_a3,participant.p22009_a4,participant.p22009_a5,participant.p22009_a6,participant.p22009_a7,participant.p22009_a8,participant.p22009_a9,participant.p22009_a10"
+Simple pipeline to run a restricted GWAS on UKB RAP.
