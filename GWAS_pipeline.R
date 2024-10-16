@@ -28,7 +28,7 @@ names(data_qced)[names(data_qced) == "participant.p21022"] <- "age"
 #Remove rows with any missing data following QC
 data_regenie <- na.omit(data_regenie)
 
-#Add FID column needed for REGENIE
+#Add FID column needed for REGENIE, N.B. the file needs to start FID IID or REGENIE step 1 won't run
 names(data_regenie_clean)[names(data_regenie_clean) == "iid"] <- "IID"
 data_regenie_clean$FID <- data_regenie_clean$IID
 
