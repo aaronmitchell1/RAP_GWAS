@@ -23,6 +23,7 @@ dx run swiss-army-knife -iin="/ukb22418_c1_22_v2_merged.bed" \
    --destination="/" --brief --yes
 
 #Step 1 REGENIE
+#can change to covarCol pc{1:10}
 
 run_regenie_step1="regenie --step 1\
  --lowmem --out colorectal_results --bed ukb22418_c1_22_v2_merged\
