@@ -40,21 +40,24 @@ dx run swiss-army-knife -iin="/ukb22418_c1_22_v2_merged.bed" \
    -icmd="${run_regenie_step1}" --tag="Step1" --instance-type "mem1_ssd1_v2_x16"\
    --destination="/" --brief --yes
 
-#Prep step 2, loop to make per-chromosome pgens/beds
+#Prep REGENIE step 2, loop to make per-chromosome pgens/beds
+
+data_field="ukb21008"
+file_dir="/Bulk/Imputation/Imputation from genotype (GEL)"
 
 for i in {1..22}; do
-    run_plink_imp="plink2 --bgen /Bulk/Imputation/Imputation from genotype (GEL)/ukb21008_c${i}_b0_v1.bgen ref-first\
-      --sample ukb21008_c${i}_b0_v1.sample \
+    run_plink="plink2 --bgen ${data_field}_c${i}_b0_v1.bgen ref-first\
+      --sample ${data_field}_c${i}_b0_v1.sample \
       --make-pgen --out ukbi_ch${i}_v1; \
     plink2 --pfile ukbi_ch${i}_v1 \
-      --no-pheno --keep colorectal.phe \
+      --no-pheno --keep phenotypes.v08-04-22.txt \
       --maf 0.006 --mac 20 --geno 0.1 --mind 0.1 \
-      --make-bed --out $ukb21008_c${i}_v1; \
+      --make-bed --out ${data_field}_c${i}_v1; \
      rm ukbi_ch${i}_v1* "
 
-    dx run swiss-army-knife -iin="/Bulk/Imputation/Imputation from genotype (GEL)/ukb21008_c${i}_b0_v1.bgen" \
-     -iin="/Bulk/Imputation/Imputation from genotype (GEL)/ukb21008_c${i}_b0_v1.sample" \
+    dx run swiss-army-knife -iin="${file_dir}/${data_field}_c${i}_b0_v1.bgen" \
+     -iin="${file_dir}/${data_field}_c${i}_b0_v1.sample" \
      -iin="/colorectal.phe" \
-     -icmd="${run_plink_imp}" --tag="Step2" --instance-type "mem2_ssd2_v2_x16"\
+     -icmd="${run_plink}" --tag="Step2" --instance-type "mem2_ssd2_v2_x16"\
      --destination="/" --brief --yes
 done
