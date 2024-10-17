@@ -58,6 +58,6 @@ for i in {1..22}; do
     dx run swiss-army-knife -iin="${file_dir}/${data_field}_c${i}_b0_v1.bgen" \
      -iin="${file_dir}/${data_field}_c${i}_b0_v1.sample" \
      -iin="/colorectal.phe" \
-     -icmd="${run_plink}" --tag="Step2" --instance-type "mem2_ssd2_v2_x16"\
+     -icmd="${run_plink}" --tag="Step2" --instance-type "mem2_ssd2_v2_x8" --priority "normal"\
      --destination="/" --brief --yes
 done
