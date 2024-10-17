@@ -55,6 +55,6 @@ for i in {1..22}; do
     dx run swiss-army-knife -iin="/Bulk/Imputation/Imputation from genotype (GEL)/ukb21008_c${i}_b0_v1.bgen" \
      -iin="/Bulk/Imputation/Imputation from genotype (GEL)/ukb21008_c${i}_b0_v1.sample" \
      -iin="/colorectal.phe" \
-     -icmd="{run_plink_imp}" --tag="Step2" --instance-type "mem2_ssd2_v2_x16"\
+     -icmd="${run_plink_imp}" --tag="Step2" --instance-type "mem2_ssd2_v2_x16"\
      --destination="/" --brief --yes
 done
