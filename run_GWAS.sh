@@ -16,7 +16,7 @@ for chr in {1..22}; do
    -iin="${txt_file_dir}/colorectal.phe" \
    -iin="${data_file_dir}/colorectal_results_pred.list" \
    -iin="${data_file_dir}/colorectal_results_1.loco.gz" \
-   -icmd="${run_regenie_cmd}" --tag="Step2" --instance-type "mem1_ssd1_v2_x8" --priority "normal"\
+   -icmd="${run_regenie_cmd}" --tag="Step2" --instance-type="mem1_ssd1_v2_x8" --priority="normal"\
    --destination="/" --brief --yes
 
 done
