@@ -50,7 +50,7 @@ for i in {1..22}; do
       --sample ${data_field}_c${i}_b0_v1.sample \
       --make-pgen --out ukbi_ch${i}_v1; \
     plink2 --pfile ukbi_ch${i}_v1 \
-      --no-pheno --keep phenotypes.v08-04-22.txt \
+      --no-pheno --keep colorectal.phe \
       --maf 0.006 --mac 20 --geno 0.1 --mind 0.1 \
       --make-bed --out ${data_field}_c${i}_v1; \
      rm ukbi_ch${i}_v1* "
