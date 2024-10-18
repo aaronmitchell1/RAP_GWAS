@@ -29,6 +29,10 @@ data_file_dir="/Data/"
 
 covariates: age, sex, age^2 
 
+#INT BMI
+
+qnorm((rank(data$bmi,na.last="keep")-0.5)/sum(!is.na(data$bmi)))
+
 #Run REGENIE step 1
 
 ./regenie \
