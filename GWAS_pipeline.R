@@ -16,7 +16,7 @@ data$bmi[is.na(data$bmi)] <- mean_bmi
 data_qced <- data[data$sex == data$participant.p22001 &    #Self-reported sex and genetic sex are the same
 data$participant.p22006 == 1 &          #Only white British individuals
 is.na(data$participant.p22019) &                    #No sex chromosome aneuploidy
-data$participant.p22020 == 1                        #Participant used to calculate PCs (only non-relatives included)
+data$participant.p22020 == 1,                        #Participant used to calculate PCs (only non-relatives included)
 ]
 
 #Select only columns needed and format column names for REGENIE
