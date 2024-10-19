@@ -1,4 +1,5 @@
 #Run this after preparing the phenotype file, UKB genotype calls are stored in seperate files per chromosome so need to be merged.
+#Ensure that instance-type is mem1_ssd1_v2_x8 and priority is low or this can get very expensive.
 
 #Make merged bfile including 22 chromosomes
 run_merge="cp /mnt/project/Bulk/Genotype\ Results/Genotype\ calls/ukb22418_c[1-9]* . ;\
