@@ -1,5 +1,5 @@
 #Run this after preparing the phenotype file, UKB genotype calls are stored in seperate files per chromosome so need to be merged.
-#Ensure that instance-type is mem1_ssd1_v2_x8 and priority is low or this step can get very expensive.
+#Ensure that instance-type is mem1_ssd2_v2_x8 and priority is low or this step can get very expensive.
 #Some people suggest setting HWE p-value to either very high or very low,
 #0.001 or 1e-60, need to test this but shouldn't be too much of a problem in a small 10k sample.
 
