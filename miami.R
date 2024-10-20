@@ -1,4 +1,6 @@
 #Modified version of miami_plot function from Andrew Elmore's GeneHackman pipeline to make a Miami plot on local machine and save to miami_plot_file.
+#Works on GWAS processed using the standardise_gwases pipeline.
+
 range = 500000
 library(qqman)
 
