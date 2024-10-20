@@ -27,6 +27,7 @@ dx run swiss-army-knife -iin="/ukb22418_c1_22_v2_merged.bed" \
 
 #Step 1 REGENIE
 #can change to covarCol pc{1:10}
+#This needs to have config mem1_ssd1_v2_x16 or you will get a low memory error.
 
 run_regenie_step1="regenie --step 1\
  --lowmem --out colorectal_results --bed ukb22418_c1_22_v2_merged\
