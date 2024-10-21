@@ -20,3 +20,6 @@ for chr in {1..22}; do
    --destination="/" --brief --yes
 
 done
+
+#Regenie will output log10p so to convert to p-value in R you can use:
+gwas_output$P <- 10^-gwas_output$LOG10P
