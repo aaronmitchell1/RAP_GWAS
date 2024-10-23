@@ -1,6 +1,6 @@
 txt_file_dir=""
 data_file_dir=""
-data_field="ukb21008"
+data_field="ukb22828"
 
 for chr in {1..22}; do
   run_regenie_cmd="regenie --step 2 --out assoc.c${chr} \
