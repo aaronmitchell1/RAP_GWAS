@@ -46,8 +46,7 @@ data_qced <- data_qced %>%
 #Select only columns needed and format column names for REGENIE
 
 data_regenie <- data_qced %>%
-select(eid, sex, bmi, age, pc1:pc10)
-names(data_qced)[names(data_qced) == "participant.p21022"] <- "age"
+select(IID, sex, bmi, age, pc1:pc10, batch, centre)
 
 #Remove rows with any missing data following QC
 data_regenie <- na.omit(data_regenie)
