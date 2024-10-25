@@ -18,15 +18,19 @@ qnorm((rank(data$bmi,na.last="keep")-0.5)/sum(!is.na(data$bmi)))
 data_regenie$status <- 0
 
 
-run regenie step1=
-"regenie --step 1\
---lowmem --out diabetes results 
---bed ukb22418 c1 22 v1 merged\
---phenoFile diabetes wes 200k.phe 
---covarFile diabetes wes 200k.phe\
---extract 200K_ WES_array_ snps qc pass.splist 
---phenoCol status\
---covarCol age --covarCol sex --covarCol ethnic group --covarCol ever smoked\
---bsize 1000 --bt --loocv --gz --threads 16";
+#The --interaction and --catCovarlist are only specified in step 2.
 
---interaction
+run_regenie_step1="regenie --step 1\
+ --lowmem --out gxetest_results --bed ukb22418_c1_22_v2_merged\
+ --phenoFile combined_qced.phe --covarFile combined_qced.phe\
+ --extract snps_qc_pass.snplist --phenoCol bmi_int\
+ --covarCol age --covarCol sex --covarCol pc{1:10} --covarCol batch --covarCol centre\
+ --bsize 1000 --loocv --gz --threads 16"
+
+dx run swiss-army-knife -iin="/ukb22418_c1_22_v2_merged.bed" \
+   -iin="/ukb22418_c1_22_v2_merged.bim" \
+   -iin="/ukb22418_c1_22_v2_merged.fam"\
+   -iin="/combined_qced.phe" \
+   -iin="/snps_qc_pass.snplist" \
+   -icmd="${run_regenie_step1}" --tag="Step1" --instance-type "mem1_ssd1_v2_x16" --priority "low"\
+   --destination="/" --brief --yes
