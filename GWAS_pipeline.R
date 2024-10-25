@@ -51,9 +51,10 @@ select(IID, sex, bmi, age, pc1:pc10, batch, centre)
 #Remove rows with any missing data following QC
 data_regenie <- na.omit(data_regenie)
 
-#Add FID column needed for REGENIE, N.B. the file needs to start FID IID or REGENIE step 1 won't run
+#Add FID column needed for REGENIE, N.B. the file needs to start FID IID or REGENIE step 1 (and PLINK QC) won't run
 names(data_regenie_clean)[names(data_regenie_clean) == "iid"] <- "IID"
 data_regenie_clean$FID <- data_regenie_clean$IID
+data_regenie_clean <- data_regenie_clean[, c("FID", setdiff(names(data_regenie_clean), "FID"))]
 
 #Write to TSV in required format (no quotes)
 write.table(data_regenie_clean,
