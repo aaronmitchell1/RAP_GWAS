@@ -20,6 +20,16 @@ is.na(data$participant.p22019) &                    #No sex chromosome aneuploid
 data$participant.p22020 == 1,                        #Participant used to calculate PCs (only non-relatives included)
 ]
 
+#Rename PC columns
+for (i in 1:10) {
+  old_name <- paste0("participant.p22009_a", i)
+  new_name <- paste0("pc", i)
+  
+  if (old_name %in% colnames(data_qced)) {
+    colnames(data_qced)[which(colnames(data_qced) == old_name)] <- new_name
+  }
+}
+
 #Select only columns needed and format column names for REGENIE
 
 data_regenie <- data_qced %>%
