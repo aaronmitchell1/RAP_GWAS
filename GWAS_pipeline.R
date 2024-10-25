@@ -30,6 +30,19 @@ for (i in 1:10) {
   }
 }
 
+#Rename other columns
+library(dplyr)
+
+data_qced <- data_qced %>%
+  rename(
+    IID = participant.eid,
+    sex = participant.p31,
+    age = participant.p21022,
+    bmi = participant.p23104_i0,
+    batch = participant.p22000,
+    centre = participant.p54_i0
+  )
+
 #Select only columns needed and format column names for REGENIE
 
 data_regenie <- data_qced %>%
