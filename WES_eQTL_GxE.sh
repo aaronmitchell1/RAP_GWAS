@@ -17,9 +17,7 @@ qnorm((rank(data$bmi,na.last="keep")-0.5)/sum(!is.na(data$bmi)))
 
 data_regenie$status <- 0
 
-
-#The --interaction is only specified in step 2.
-#You need to specify the interacting variable in covarColList and catCovarList in step 1 then additionally as --interaction in step 2.
+#You need to specify the interacting variable as a covariate in step 1 then additionally as --interaction in step 2. Binary traits don't need to be specified in catCovarList if they are coded 0/1.
 
 run_regenie_step1="regenie --step 1\
  --lowmem --out gxetest_results --bed ukb22418_c1_22_v2_merged\
