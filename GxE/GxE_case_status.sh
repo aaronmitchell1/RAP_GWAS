@@ -90,12 +90,11 @@ done
 for chr in {1..22}; do
   run_regenie_cmd="regenie --step 2 --out assoc.c${chr} \
      --bed ${data_field}_c${chr}_v3 \
-     --phenoFile combined_qced.phe --covarFile combined_qced.phe --bsize 200 \
+     --phenoFile combined_qced.phe --covarFile combined_qced.phe --bsize 200 --pred GxE_results_pred.list \
      --phenoCol bmi_int --covarCol age --covarCol batch --covarCol centre \
      --covarCol status --covarCol sex \
      --covarCol pc{1:10} \
-     --interaction status
-     --pred GxE_results_pred.list \
+     --interaction status \
      --minMAC 3 --threads 16 --gz"
 
   dx run swiss-army-knife -iin="${data_file_dir}/${data_field}_c${chr}_v3.bed" \
@@ -104,7 +103,7 @@ for chr in {1..22}; do
    -iin="${txt_file_dir}/combined_qced.phe" \
    -iin="${data_file_dir}/GxE_results_pred.list" \
    -iin="${data_file_dir}/GxE_results_1.loco.gz" \
-   -icmd="${run_regenie_cmd}" --tag="Step2" --instance-type "mem1_ssd2_v2_x8" --priority "low"\
+   -icmd="${run_regenie_cmd}" --tag="Step2" --instance-type "mem1_ssd2_v2_x8" --priority "low" \
    --destination="/GxE/" --brief --yes
 
 done
