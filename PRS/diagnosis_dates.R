@@ -1,17 +1,11 @@
 #UKB releases diagnosis dates in instances, sometimes these are duplicates but could also reflect if a patient has been diagnosed with cancer multiple times.
-#Need to filter out and keep only those cases in the 21 instances where the patient has only 1 diagnosis, but still keep them if there is a duplication of the same date across instances.
+#Whilst there are 21 instances, only the first 5 actually have data and numbers are very small <500 after i2 - all of these will be ones with multiple diagnoses.
+#Need to filter out and keep only those cases where the patient has only 1 diagnosis, but still keep them if there is a duplication of the same date across instances.
+#However in matching the first 2 columns and keeping those in a window of say 1 year (may represent artefacting) there can additionally be a date in the third column which indicates multiple diagnoses.
+#Use field 40009 to filter out those who should only have 1 diagnosis, then if date in i2 is more than 1 year different from i0 or i1, remove these participants
+#Then remove those where there is more than 1 year's discrepancy between i0 and i1 - after genetic QC you are left with <5000 where you can be relatively sure they have 1 diagnosis and know the date.
 
 library(dplyr)
-
-data_single_diagnosis <- data %>%
-    rowwise() %>%
-    mutate(diagnosis_date = case_when(
-        sum(!is.na(c_across(participant.p40005_i0:participant.p40005_i21))) == 1 ~
-            first(c_across(participant.p40005_i0:participant.p40005_i21)[!is.na(c_across(participant.p40005_i0:participant.p40005_i21))]),
-        all(c_across(participant.p40005_i0:participant.p40005_i21) == first(na.omit(c_across(participant.p40005_i0:participant.p40005_i21)))) ~
-            first(na.omit(c_across(participant.p40005_i0:participant.p40005_i21))),
-        TRUE ~ as.Date(NA)
-    ))
 
 #We want to bin these participants by date of BMI measurement (assessment centre visit p53_i0) in relation to date of diagnosis in comparable groups
 #but there are quite a few outliers as there are a lot of prevalent cases that were diagnosed historically.
