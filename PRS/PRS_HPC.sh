@@ -16,7 +16,7 @@ module load apps/plink2/2.00a6LM
 
 cd /user/work/vc23656/GWAS/bfiles_prs
 
-#cols 3, 5 and 9 represent RSID, effect allele and beta in a standard REGENIE GWAS
+#cols 3, 5 and 10 represent RSID, effect allele and beta in a standard REGENIE 3.6 GWAS
 
 cmd=""
 
@@ -29,4 +29,4 @@ cat-bgen -g $cmd -og initial_chr.bgen -clobber
 bgenix -g initial_chr.bgen -index -clobber
 
 plink2 --bgen initial_chr.bgen ref-first --sample /mnt/storage/private/mrcieu/data/ukbiobank/genetic/variants/arrays/imputed/released/2018-09-18/data/dosage_bgen/data.chr1-22_plink.sample --freq --maf 0.01 --make-pgen --out prsfivetotenyrafter
-plink2 --pfile prsfivetotenyrafter --score /user/work/vc23656/GWAS/step2_fivetotenyrafter1_bmi_int_merged.txt 3 5 9 --out prsfivetotenyrafterout
+plink2 --pfile prsfivetotenyrafter --score /user/work/vc23656/GWAS/step2_fivetotenyrafter1_bmi_int_merged.txt 3 5 10 --out prsfivetotenyrafterout
