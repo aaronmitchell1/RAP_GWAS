@@ -8,7 +8,7 @@ scorefile <- data.frame(GWAS_output$ID, GWAS_output$ALLELE1, GWAS_output$BETA)
 colnames(scorefile) <- c("rsid", "effect_allele", "beta")
 write.table(scorefile, row.names = FALSE, col.names = TRUE, quote = FALSE, file = "scorefile.txt")
 
-chrposlist <- paste(GWAS_output$CHROM, paste(GWAS_output$GENPOS, GWAS_output$GENPOS, sep = "-"), sep = ":")
+chrposlist <- paste(sprintf("%02d", GWAS_output$CHROM), paste(GWAS_output$GENPOS, GWAS_output$GENPOS, sep = "-"), sep = ":")
 write.table(chrposlist, row.names = FALSE, col.names = FALSE, quote = FALSE, file = "chrposlist.txt")
 
 #!/bin/bash
