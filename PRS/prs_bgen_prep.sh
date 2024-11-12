@@ -1,4 +1,5 @@
 #Making PRS more efficiently from REGENIE GWAS, without running into storage issues by using large BGEN files. 
+#Make any nCHR <10 have a trailing 0 to match UKB BGEN format.
 #Need to create rsidlist, chrposlist and scorefile in R from REGENIE GWAS data:
 
 rsidlist <- data.frame(GWAS_output$ID)
@@ -8,6 +9,7 @@ scorefile <- data.frame(GWAS_output$ID, GWAS_output$ALLELE1, GWAS_output$BETA)
 colnames(scorefile) <- c("rsid", "effect_allele", "beta")
 write.table(scorefile, row.names = FALSE, col.names = TRUE, quote = FALSE, file = "scorefile.txt")
 
+GWAS_output$CHROM <- sprintf("%02d", GWAS_output$CHROM)
 chrposlist <- paste(sprintf("%02d", GWAS_output$CHROM), paste(GWAS_output$GENPOS, GWAS_output$GENPOS, sep = "-"), sep = ":")
 write.table(chrposlist, row.names = FALSE, col.names = FALSE, quote = FALSE, file = "chrposlist.txt")
 
