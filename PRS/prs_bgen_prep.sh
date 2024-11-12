@@ -1,4 +1,15 @@
-#Making PRS more efficiently from REGENIE GWAS, without running into storage issues by using large BGEN files. Keep SNPs from SNPlist of all colorectal patients, then generate smaller bgen files for subsequent PLINK PRS analysis.
+#Making PRS more efficiently from REGENIE GWAS, without running into storage issues by using large BGEN files. 
+#Need to create rsidlist, chrposlist and scorefile in R from REGENIE GWAS data:
+
+rsidlist <- data.frame(GWAS_output$ID)
+write.table(rsidlist, row.names = FALSE, col.names = FALSE, quote = FALSE, file = "rsidlist.txt")
+
+scorefile <- data.frame(GWAS_output$ID, GWAS_output$ALLELE1, GWAS_output$BETA)
+colnames(scorefile) <- c("rsid", "effect_allele", "beta")
+write.table(scorefile, row.names = FALSE, col.names = TRUE, quote = FALSE, file = "scorefile.txt")
+
+chrposlist <- paste(GWAS_output$CHROM, paste(GWAS_output$GENPOS, GWAS_output$GENPOS, sep = "-"), sep = ":")
+write.table(chrposlist, row.names = FALSE, col.names = FALSE, quote = FALSE, file = "chrposlist.txt")
 
 module load gcc/10.5.0
 module load bgen/1.1.7
