@@ -17,6 +17,7 @@ module load apps/plink2/2.00a6LM
 cd /user/work/vc23656/GWAS/bfiles_prs
 
 #cols 3, 5 and 10 represent RSID, effect allele and beta in a standard REGENIE 3.6 GWAS
+#Drop duplicate values from final merged GWAS output using GWAS_merged <- GWAS_merged[!duplicated(GWAS_merged$ID), ]
 
 cmd=""
 
