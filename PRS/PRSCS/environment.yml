@@ -1,0 +1,11 @@
+name: pyprscs
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - python=3.12.3
+  - pip=24.0
+  - pip:
+    - NumPy==2.1.3
+    - SciPy==1.14.1
+    - h5py==3.12.1
