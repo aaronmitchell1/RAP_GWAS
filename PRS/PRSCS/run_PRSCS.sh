@@ -10,11 +10,12 @@
 #SBATCH --mem=48G
 #SBATCH --partition=cpu
 
-cd /user/work/vc23656/PRScs/
+module load languages/python/3.12.3
 
 source ~/initConda.sh
-
 conda init
-conda activate pyprscs
+conda activate /user/work/vc23656/miniconda3/envs/pyprscs
+
+cd /user/work/vc23656/PRScs/
 
 python PRScs.py --ref_dir=/mnt/storage/private/mrcieu/users/vc23656/PRSCS_LD/ldblk_1kg_eur --bim_prefix=/mnt/storage/private/mrcieu/users/vc23656/all_UKB_bfiles/array_bim_controls_PRSCStraining/PRSCStraining_controls_merged --sst_file=/user/work/vc23656/PRScs/fivetotenyrafter_formatted.txt --n_gwas=1618 --out_dir=/user/work/vc23656/PRScs/fivetotenyrsafter/prs --phi=1e-2
