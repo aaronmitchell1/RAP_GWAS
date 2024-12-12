@@ -1,9 +1,11 @@
 #Convert REGENIE GWAS into PRSCS format
 
+library(dplyr)
+
 colnames(gwas)[which(names(gwas) == "ID")] <- "SNP"
 colnames(gwas)[which(names(gwas) == "ALLELE1")] <- "A1"
 colnames(gwas)[which(names(gwas) == "ALLELE0")] <- "A2"
-gwas_formatted_PRSCS <- select(gwas, c("SNP", "A1", "A2", "BETA", "SE"))
+gwas_formatted_PRSCS <- dplyr::select(gwas, c("SNP", "A1", "A2", "BETA", "SE"))
 
 write.table(gwas_formatted_PRSCS,
             file = "gwas_formatted_PRSCS.txt",
