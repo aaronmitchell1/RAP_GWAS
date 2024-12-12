@@ -12,6 +12,6 @@ cat-bgen -g chr_01.bgen chr_02.bgen chr_03.bgen chr_04.bgen chr_05.bgen chr_06.b
 
 plink2 --bgen /mnt/storage/private/mrcieu/users/vc23656/ind_PRS/5prior/bgenix/combined.bgen ref-first --sample /mnt/storage/private/mrcieu/data/ukbiobank/genetic/variants/arrays/imputed/released/2018-09-18/data/dosage_bgen/data.chr1-22.sample --make-pgen --out /mnt/storage/private/mrcieu/users/vc23656/ind_PRS/5prior/bgenix/combined
 
-#generate the PRS from the PRS-CS output. Column 2 is the RSID, 4 is the effect allele and 6 is the PRS-CS posterior effect size estimate
+#generate the PRS from the PRS-CS output. /combined is the name of the .p files. Column 2 is the RSID, 4 is the effect allele and 6 is the PRS-CS posterior effect size estimate
 
 plink2 --pfile /mnt/storage/private/mrcieu/users/vc23656/ind_PRS/5prior/bgenix/combined --score /mnt/storage/private/mrcieu/users/vc23656/ind_PRS/5prior/merged_file.txt 2 4 6 no-mean-imputation ignore-dup-ids --keep /user/home/vc23656/GWAS/fiveyearspriorHPC.phe --out PRS
