@@ -1,11 +1,12 @@
 #to get individual-level PRS from PRS-CS output, based on Phil Greer, Genevieve and Ashley's scripts
+#cat-bgen works quickly but is quite fiddly to use, has to have a very specific input like this:
 
-#couldn't get cat-bgeni in BGENIX to work but this seems to be OK instead, concat into 1 file for PLINK, generating the .bgen.bgi index file wouldn't work either but you don't seem to need it
+module load gcc/10.5.0
+module load bgen/1.1.7
 
-for i in {01..22}
-do
-cat /mnt/storage/private/mrcieu/users/vc23656/ind_PRS/5prior/bgenix/chr_${i}.bgen >> /mnt/storage/private/mrcieu/users/vc23656/ind_PRS/5prior/bgenix/combined.bgen
-done
+cd /mnt/storage/private/mrcieu/users/vc23656/GIANT_PRS
+
+cat-bgen -g chr_01.bgen chr_02.bgen chr_03.bgen chr_04.bgen chr_05.bgen chr_06.bgen chr_07.bgen chr_08.bgen chr_09.bgen chr_10.bgen chr_11.bgen chr_12.bgen chr_13.bgen chr_14.bgen chr_15.bgen chr_16.bgen chr_17.bgen chr_18.bgen chr_19.bgen chr_20.bgen chr_21.bgen chr_22.bgen -og concat.bgen
 
 #convert merged dosage BGEN into PGEN to work with --score
 
