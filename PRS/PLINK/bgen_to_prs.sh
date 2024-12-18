@@ -7,6 +7,7 @@ module load bgen/1.1.7
 cd /mnt/storage/private/mrcieu/users/vc23656/GIANT_PRS
 
 cat-bgen -g chr_01.bgen chr_02.bgen chr_03.bgen chr_04.bgen chr_05.bgen chr_06.bgen chr_07.bgen chr_08.bgen chr_09.bgen chr_10.bgen chr_11.bgen chr_12.bgen chr_13.bgen chr_14.bgen chr_15.bgen chr_16.bgen chr_17.bgen chr_18.bgen chr_19.bgen chr_20.bgen chr_21.bgen chr_22.bgen -og concat.bgen
+bgenix -g concat.bgen -index
 
 #convert merged dosage BGEN into PGEN to work with --score
 
