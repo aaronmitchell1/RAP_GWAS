@@ -28,13 +28,10 @@ write.table(chrposlist, row.names = FALSE, col.names = FALSE, quote = FALSE, fil
 module load gcc/10.5.0
 module load bgen/1.1.7
 
-cd /user/work/vc23656/GWAS/bfiles_prs
+cd /mnt/storage/private/mrcieu/users/vc23656/GIANT_PRS
 
-for i in {01..22}
-do
-  bgen_file="/mnt/storage/private/mrcieu/data/ukbiobank/genetic/variants/arrays/imputed/released/2018-09-18/data/dosage_bgen/data.chr${i}.bgen"
-  output_file="/user/work/vc23656/GWAS/bfiles_prs/prs_file${i}"
+for i in {01..22}; do
 
-bgenix -g ${bgen_file} -incl-rsids /user/work/vc23656/GWAS/rsidlist_five_yr_after.txt -incl-range /user/work/vc23656/GWAS/chrposlist_fiveyrsafter.txt > chr_${i}.bgen
+bgenix -g "/mnt/storage/private/mrcieu/data/ukbiobank/genetic/variants/arrays/imputed/released/2018-09-18/data/dosage_bgen/data.chr${i}.bgen" -incl-rsids "/user/work/vc23656/PRScs/GIANT/RSIDlistGIANTPRS.txt" > "chr_${i}.bgen"
 
 done
