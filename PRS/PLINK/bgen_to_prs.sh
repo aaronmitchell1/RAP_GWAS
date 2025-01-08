@@ -13,6 +13,6 @@ bgenix -g concat.bgen -index
 
 plink2 --bgen /mnt/storage/private/mrcieu/users/vc23656/ind_PRS/5prior/bgenix/combined.bgen ref-first --sample /mnt/storage/private/mrcieu/data/ukbiobank/genetic/variants/arrays/imputed/released/2018-09-18/data/dosage_bgen/data.chr1-22.sample --make-pgen --out /mnt/storage/private/mrcieu/users/vc23656/ind_PRS/5prior/bgenix/combined
 
-#generate the PRS from the PRS-CS output. /combined is the name of the .p files. Column 2 is the RSID, 4 is the effect allele and 6 is the PRS-CS posterior effect size estimate
+#generate the PRS from the PRS-CS output. /combined is the name of the .p files. Column 2 is the RSID, 4 is the effect allele and 6 is the PRS-CS posterior effect size estimate. The SCORE1_SUM column is the PRS output, kept by using the cols=scoresums command in PLINK2.
 
 plink2 --pfile /mnt/storage/private/mrcieu/users/vc23656/ind_PRS/5prior/bgenix/combined --score /mnt/storage/private/mrcieu/users/vc23656/ind_PRS/5prior/merged_file.txt 2 4 6 list-variants cols=maybefid,nallele,denom,dosagesum,scoreavgs,scoresums no-mean-imputation ignore-dup-ids --keep /user/home/vc23656/GWAS/fiveyearspriorHPC.phe --out PRS
