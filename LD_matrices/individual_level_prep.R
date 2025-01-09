@@ -20,3 +20,5 @@ rawmat <- apply(rawmat, 2, convert_genotype)
 cormat <- cor(rawmat[, SNPs], method = "pearson", use="pairwise")
 cormat[upper.tri(cormat)] <- 0
 diag(cormat) <- 0
+cormat <- (cormat)^2
+filtered <-which(cormat > 0.01, arr.ind = T)
