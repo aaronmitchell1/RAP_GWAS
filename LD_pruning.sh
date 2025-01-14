@@ -1,6 +1,4 @@
-#Running the GWAS using the DNANexus pipeline, the observed line was consistently above the expected line on QQ plot and λ was >1 indicating genomic inflation. 
-#This was despite following UKB pipeline, removing unrelated individuals and adjusting for 10 PCs. This may be due to including too many variants in step 1.
-#Take the QC'd merged bfiles from step 1 of Phil Greer's pipeline and run LD pruning, then check nSNPs:
+#Run the LD pruning step for array variants before step 1, this can reduce the number of SNPs from 10m to 500k if needed to save time/money on RAP.
 
 data_field="ukb22418_c1_22"
 
