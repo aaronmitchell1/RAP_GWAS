@@ -8,7 +8,7 @@ module load bgen/1.1.7
 
 for i in {01..22}; do
 
-bgenix -g "/mnt/storage/private/mrcieu/data/ukbiobank/genetic/variants/arrays/imputed/released/2018-09-18/data/dosage_bgen/data.chr${i}.bgen" -incl-rsids "/mnt/storage/private/mrcieu/users/vc23656/matrices/random_SNPs.txt" > "chr_${i}.bgen"
+bgenix -g /mnt/storage/private/mrcieu/data/ukbiobank/genetic/variants/arrays/imputed/released/2018-09-18/data/dosage_bgen/data.chr${i}.bgen -incl-rsids /mnt/storage/private/mrcieu/users/vc23656/matrices/random_SNPs.txt > chr_${i}.bgen
 
 done
 
