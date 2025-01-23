@@ -1,6 +1,7 @@
 #Convert REGENIE GWAS into PRSCS format
 
 library(dplyr)
+library(readr)
 
 colnames(gwas)[which(names(gwas) == "ID")] <- "SNP"
 colnames(gwas)[which(names(gwas) == "ALLELE1")] <- "A1"
