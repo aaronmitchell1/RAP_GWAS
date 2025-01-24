@@ -1,4 +1,5 @@
 #Convert REGENIE GWAS into PRSCS format
+#N.B., Allele letters have to be in capitals or they won't be recognised by PRSCS (it will run but output is empty)
 
 library(dplyr)
 library(readr)
