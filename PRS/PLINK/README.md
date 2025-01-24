@@ -13,4 +13,4 @@ Take the PRS-CS betas and put them back into PLINK to get an individual-level PR
 
 To format dosage BGEN files to include only the SNPs used in the PRS so they are more manageable, you can use bgenix (seems to be fairly quick). 
 
-qctool is annoyingly sensitive to the sample on line 14079 which is misformatted, make a new .sample file excluding this sample. But then you have to make 22 new bfiles as it can't handle there being different nsamples in sample and bfiles...
+qctool is annoyingly sensitive samples i.e, on line 14079 which are misformatted, so don't use it and use bgenix instead.
