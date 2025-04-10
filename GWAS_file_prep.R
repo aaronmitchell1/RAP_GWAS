@@ -13,11 +13,11 @@ dx extract_dataset White_patients_with_BMI --entities "participant" --fields "pa
 mean_bmi <- mean(data$bmi, na.rm = TRUE)
 data$bmi[is.na(data$bmi)] <- mean_bmi
 
-#QC
-data_qced <- data[data$sex == data$participant.p22001 &    #Self-reported sex and genetic sex are the same
+#QC - if you have already filtered on the RAP I don't think filtering for the same terms is necessary - but some will appear as NA in the phenotype data even if you use the 'is not null' filter on RAP.
+data_qced <- data[data$participant.p31 == data$participant.p22001 &    #Self-reported sex and genetic sex are the same
 data$participant.p22006 == 1 &          #Only white British individuals
 is.na(data$participant.p22019) &                    #No sex chromosome aneuploidy
-data$participant.p22020 == 1,                        #Participant used to calculate PCs (only non-relatives included)
+is.na(data$participant.p22020),                        #Participant used to calculate PCs (only non-relatives included)
 ]
 
 #Rename PC columns
